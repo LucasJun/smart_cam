@@ -1,0 +1,38 @@
+{
+	"frame_hw": [480, 640],
+	"fps": 30,
+	"jpeg_quality": 80,
+	"FireDetector": {
+		"fire_red_thresh": 160,
+		"fire_saturation_thresh": 45
+	},
+	"SmokeDetector": {
+		"smoke_detect_freq": 1,
+		"smoke_warning_thresh": 5,
+		"smoke_keep_found_duration": 30
+	},
+	"DiffMoveDetector": {
+		"pix_thresh": 40
+	},
+	"HumanDetector": {
+		"img_size": 416,
+		"conf_thresh": 0.5,
+		"nms_thresh": 0.7
+	},
+	"Notifier": {
+		"is_warning_when_human": false,
+		"is_warning_when_move": false,
+		"is_warning_when_fire": false,
+		"is_warning_when_smoke": false,
+		"is_record_when_human": false,
+		"is_record_when_move": false,
+		"is_record_when_fire": false,
+		"is_record_when_smoke": false,
+		"record_delay": 1,
+		"remote_warning_delay": 600,
+		"stop_record_after_no_event_delay": 60
+	},
+	"cam": {
+		"target_addr": "10.42.0.98"
+	}
+}
