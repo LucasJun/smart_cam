@@ -24,15 +24,16 @@
 		"is_warning_when_move": false,
 		"is_warning_when_fire": false,
 		"is_warning_when_smoke": false,
-		"is_record_when_human": false,
+		"is_record_when_human": true,
 		"is_record_when_move": false,
 		"is_record_when_fire": false,
 		"is_record_when_smoke": false,
 		"record_delay": 1,
 		"remote_warning_delay": 600,
-		"stop_record_after_no_event_delay": 60
+		"stop_record_after_no_event_delay": 60,
+		"interest_capture_delay": 15
 	},
 	"cam": {
-		"target_addr": "10.42.0.98"
+		"target_addr": "127.0.0.1"
 	}
 }

@@ -1,6 +1,7 @@
 import time
 import notify_type
 import threading
+from Recorder import Recorder
 
 
 class Notifier:
@@ -27,24 +28,38 @@ class Notifier:
     # 开始录像后，在没有事件多长时间后停止，默认60s
     stop_record_after_no_event_delay = 60
 
+    # 感兴趣截图控制，每当有设定事件触发，就会触发一次感兴趣截图，间隔 interest_capture_delay 秒后，才能再次触发
+    _last_interest_capture_time = 0
+    interest_capture_delay = 15
+
+    # 上一次通知相关事件的时间，这里用来减少重复通知的次数
     _last_notice_human_time = 0
     _last_notice_smoke_time = 0
     _last_notice_fire_time = 0
     _last_notice_move_time = 0
 
+    # 上一次远程通知相关事件的时间，这里用来减少重复通知的次数
     _last_remote_warning_human_time = 0
     _last_remote_warning_smoke_time = 0
     _last_remote_warning_fire_time = 0
     _last_remote_warning_move_time = 0
 
+    # 上一次设定录像标志的时间，用来处理在没有事件发生时延时停止录像
     _last_record_time = 0
 
+    # 通知锁，避免抢占导致效率低下
     _lock_notice = threading.Lock()
     _need_quit = False
 
     can_record = False
 
-    def __init__(self, recorder=None, web_notifier=None, wx_notifier=None):
+    def __init__(self, recorder: Recorder = None, web_notifier=None, wx_notifier=None):
+        '''
+        初始化
+        :param recorder: 这个记录器，用来写入通知事件
+        :param web_notifier: 远程通知器，这个是网页通知器，等待实现
+        :param wx_notifier: 远程通知器，这个是微信通知器，等待实现
+        '''
         self.recorder = recorder
         self.web_notifier = web_notifier
         self.wx_notifier = wx_notifier
@@ -63,6 +78,7 @@ class Notifier:
         self.record_delay = cfg['record_delay']
         self.remote_warning_delay = cfg['remote_warning_delay']
         self.stop_record_after_no_event_delay = cfg['stop_record_after_no_event_delay']
+        self.interest_capture_delay = cfg['interest_capture_delay']
 
     def save(self):
         cfg = {
@@ -77,6 +93,7 @@ class Notifier:
             'record_delay': self.record_delay,
             'remote_warning_delay': self.remote_warning_delay,
             'stop_record_after_no_event_delay': self.stop_record_after_no_event_delay,
+            'interest_capture_delay': self.interest_capture_delay,
         }
         return cfg
 
@@ -112,6 +129,16 @@ class Notifier:
         self._need_quit = True
         self._delay_stop_record_thread.join()
 
+    def do_interest_mark(self):
+        '''
+        设定兴趣点截图标志
+        :return:
+        '''
+        ts = time.time()
+        if ts - self._last_interest_capture_time > self.interest_capture_delay:
+            self._last_interest_capture_time = ts
+            self.recorder.do_interest_mark()
+
     def notice(self, level: int = 0, msg: str = ''):
         '''
         :param level: 通知级别
@@ -144,12 +171,16 @@ class Notifier:
         if level == notify_type.type_human and self.is_record_when_human:
             self._last_record_time = time.time()
             self.can_record = True
+            self.do_interest_mark()
         elif level == notify_type.type_fire and self.is_record_when_fire:
             self._last_record_time = time.time()
             self.can_record = True
+            self.do_interest_mark()
         elif level == notify_type.type_smoke and self.is_record_when_smoke:
             self._last_record_time = time.time()
             self.can_record = True
+            self.do_interest_mark()
         elif level == notify_type.type_move and self.is_record_when_move:
             self._last_record_time = time.time()
             self.can_record = True
+            self.do_interest_mark()
