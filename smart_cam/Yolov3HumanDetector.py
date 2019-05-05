@@ -38,7 +38,7 @@ class Yolov3HumanDetector:
         self.model.to(self.device).eval()
 
         # Get classes and colors
-        self.classes = load_classes(parse_data_cfg(const_define.yolo_coco_data)['names'])
+        self.classes = load_classes(const_define.coco_names_path)
         self.colors = [[random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for _ in range(len(self.classes))]
 
     def load(self, cfg: dict):

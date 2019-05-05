@@ -305,6 +305,6 @@ class SmartCam:
 
 if __name__ == '__main__':
     sc = SmartCam(-1, debug_show=False)
-    sc.load()
+    sc.load(const_define.main_config_path)
     # exit(0)
     sc.run()
