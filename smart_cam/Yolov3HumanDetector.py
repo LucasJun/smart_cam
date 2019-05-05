@@ -4,7 +4,8 @@ import imageio
 import threading
 from collections import deque
 import sys
-sys.path.append('smart_cam/yolov3')
+import const_define
+sys.path.append('yolov3')
 
 from yolov3.models import *
 from yolov3.utils.utils import *
@@ -18,7 +19,13 @@ class Yolov3HumanDetector:
 
     _lock_load_cfg = threading.Lock()
 
-    def __init__(self, net_cfg_path='smart_cam/yolov3/cfg/yolov3-spp.cfg', weights_path='smart_cam/yolov3/weights/yolov3-spp.weights', *, debug_show=False):
+    def __init__(self, net_cfg_path='yolov3/cfg/yolov3-spp.cfg', weights_path='yolov3/weights/yolov3-spp.weights', *, debug_show=False):
+        '''
+        初始化函数
+        :param net_cfg_path: yolo网络结构文件的路径
+        :param weights_path: yolo网络权重文件的路径
+        :param debug_show: 是否启动debug模式
+        '''
         self.frame_buffer = deque(maxlen=1)
         self.debug_show = debug_show
         self.net_cfg_path = net_cfg_path
@@ -31,7 +38,7 @@ class Yolov3HumanDetector:
         self.model.to(self.device).eval()
 
         # Get classes and colors
-        self.classes = load_classes(parse_data_cfg('smart_cam/yolov3/cfg/coco.data')['names'])
+        self.classes = load_classes(parse_data_cfg(const_define.yolo_coco_data)['names'])
         self.colors = [[random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for _ in range(len(self.classes))]
 
     def load(self, cfg: dict):
@@ -59,6 +66,10 @@ class Yolov3HumanDetector:
         self.frame_buffer.append(frame)
 
     def detect(self):
+        '''
+        检测函数，检测到人类时，将会返回人类的包围框的坐标
+        :return:
+        '''
         with torch.no_grad(), self._lock_load_cfg:
             img = self.frame_buffer[0].copy()
 
@@ -88,6 +99,8 @@ class Yolov3HumanDetector:
 
                 # Draw bounding boxes and labels of detections
                 for x1, y1, x2, y2, conf, cls_conf, cls in detections:
+                    if self.classes[int(cls)] != 'person':
+                        continue
                     human_bound_rects.append([x1, y1, x2, y2])
                     if self.debug_show:
                         # Add bbox to the image
