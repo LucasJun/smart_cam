@@ -3,6 +3,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 import time
 import os
 from global_var import sc_m
+import json
 
 # 此迭代生成器生成mjpeg流注入httpresponse中
 def genframe(sc):
@@ -17,10 +18,23 @@ def genframe(sc):
 def video_feed(request):
     scm = sc_m()
     return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
-
         
-def index(request):
+def index(request):   
     return render(request, 'index.html')
+
+def ajax_status_table(request):
+    # 读取record文件夹中的log文件
+    ts = time.strftime('%Y_%m_%d', time.localtime())
+    record_file_path = './smart_cam/smart_cam/record/' + ts + '.log'
+    status_list =[]
+    with open(record_file_path,'r') as record_file:
+        while True:
+            status = record_file.readline().split(';')
+            print(status)
+            status_list.append(status)
+            if status == None:
+                break
+    return HttpResponse(content=status_list)
 
 def adjust(request):
     return render(request, 'adjust.html')

@@ -24,7 +24,7 @@
 		"is_warning_when_move": false,
 		"is_warning_when_fire": false,
 		"is_warning_when_smoke": false,
-		"is_record_when_human": true,
+		"is_record_when_human": false,
 		"is_record_when_move": false,
 		"is_record_when_fire": false,
 		"is_record_when_smoke": false,

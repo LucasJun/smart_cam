@@ -1,42 +1,52 @@
 {% extends "base.html" %}
 
 {% block index %}
+
 <div class="ui segment">
-    <div class="ui grid">
-        
+    <div class="ui grid">        
         <div class="twelve wide stretched column">
             <div class="ui two column doubling stackable grid container">
                 <div>
                     <img src="video_feed" width="640" height="480">
                 </div>
-                <table class="ui collapsing table">
+                <table class="ui collapsing table" id="ajax_status_table">
                     <tr>
                     <thead>
-                        <th width="100px">历史信息</th>
+                        <th width="50px">事件类型</th>
+                        <th width="100px">事件</th>
                         <th width="50px">时间</th>
                     </thead>
                     <tbody>
+                        {% for status in status_list %}
                         <tr>
-                            <td>无异常</td>
-                            <td>2019.1.3</td>
+                            <td>{ status[1] }</td>
+                            <td>{ status[2] }</td>
+                            <td>{ status[0] }</td>
                         </tr>
-                        <tr>
-                            <td>无异常</td>
-                            <td>2019.1.4</td>
-                        </tr>
-                        <tr>
-                            <td>无异常</td>
-                            <td>2019.1.4</td>
-                        </tr>
-                        <tr>
-                            <td>无异常</td>
-                            <td>2019.1.4</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                     </tr>
                 </table>
             </div>
         </div>
+        <div class="ui left floated compact segment">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="checkbox1" onclick="isHumanDetect()">
+                    <label>人类检测</label>
+                </div>
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="checkbox2" onclick="isMoveDetect()">
+                    <label>移动检测</label>
+                </div>
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="checkbox3" onclick="isSmokeDetect()">
+                    <label>烟雾检测</label>
+                </div>
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="checkbox4" onclick="isFireDetect()">
+                    <label>火焰检测</label>
+                </div>
+    </div>
     </div>
 </div>
 {% endblock %}
