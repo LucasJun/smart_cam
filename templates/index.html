@@ -10,22 +10,23 @@
                     <img src="video_feed" width="640" height="480">
                 </div>
                 <table class="ui collapsing table" id="ajax_status_table">
-                    <tr>
                     <thead>
-                        <th width="50px">事件类型</th>
-                        <th width="100px">事件</th>
-                        <th width="50px">时间</th>
+                        <tr>
+                            <th width="50px">事件类型</th>
+                            <th width="100px">事件</th>
+                            <th width="50px">时间</th>
+                        </tr>    
                     </thead>
                     <tbody>
-                        {% for status in status_list %}
-                        <tr>
-                            <td>{ status[1] }</td>
-                            <td>{ status[2] }</td>
-                            <td>{ status[0] }</td>
-                        </tr>
-                        {% endfor %}
+                        <!-- {% for i in content %}
+                            {% for j in i. %}
+                            <tr>
+                            <td> {{ i[1] }} </td>
+                            <td> {{ i[2] }} </td>
+                            <td> {{ i[0] }} </td>
+                            </tr>
+                        {% endfor %} -->
                     </tbody>
-                    </tr>
                 </table>
             </div>
         </div>

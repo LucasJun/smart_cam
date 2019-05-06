@@ -44,6 +44,9 @@ class SmartCam:
     _is_start = False
     _recording_frame_hw = None
 
+    _human_boxes = []
+    draw_human_boxes = True
+
     def __init__(self, cam_id=0, *, debug_show=False):
         '''
         初始化函数
@@ -197,9 +200,11 @@ class SmartCam:
             self.human_detector.push_frame(self.frame)
             bboxes = self.human_detector.detect()
             if len(bboxes) > 0:
+                self._human_boxes = bboxes
                 self.notifier.notice(notify_type.type_human, 'found human')
                 self.has_human = True
             else:
+                self._human_boxes = []
                 self.has_human = False
             time.sleep(1 / self.fps)
 
@@ -233,6 +238,7 @@ class SmartCam:
                 # 从IP相机获得图像数据
                 if self.smart_cam.offline:
                     print('camera offline')
+                    time.sleep(1)
                 img = self.smart_cam.get_cam_img()
                 if img is not None:
                     # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -296,18 +302,27 @@ class SmartCam:
         返回当前图像，如果没有初始化成功，返回None
         :return: np.array
         '''
-        return self.frame
+        return self.frame.copy()
 
     def get_current_jpg(self):
         '''
         返回当前图像的JPEG编码格式的字节串，如果没有初始化成功，返回None
         :return: None or bytes
         '''
-        if self.frame is not None:
-            img = cv2.cvtColor(self.frame, cv2.COLOR_RGB2BGR)
+        img = self.get_current_img()
+        human_boxes = self._human_boxes.copy()
+        if img is not None:
+            if self.draw_human_boxes:
+                for box in human_boxes:
+                    cv2.rectangle(img, tuple(box[:2]), tuple(box[2:]), (0, 255, 0))
+
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             _, data = cv2.imencode('.jpg', img, (cv2.IMWRITE_JPEG_QUALITY, self.jpeg_quality))
             return bytes(data)
         return None
+    
+    def get_recent_msg(self):
+        return list(self.notifier.get_recent_msg())
 
 
 if __name__ == '__main__':

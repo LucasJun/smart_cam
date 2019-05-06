@@ -2,6 +2,7 @@ import time
 import notify_type
 import threading
 from Recorder import Recorder
+from collections import deque
 
 
 class Notifier:
@@ -65,6 +66,7 @@ class Notifier:
         self.wx_notifier = wx_notifier
         self._delay_stop_record_thread = threading.Thread(target=self.delay_stop_record_run)
         self._delay_stop_record_thread.start()
+        self.msg_list = deque(maxlen=8)
 
     def load(self, cfg: dict):
         self.is_warning_when_human = cfg['is_warning_when_human']
@@ -138,6 +140,9 @@ class Notifier:
         if ts - self._last_interest_capture_time > self.interest_capture_delay:
             self._last_interest_capture_time = ts
             self.recorder.do_interest_mark()
+    
+    def get_recent_msg(self):
+        return self.msg_list
 
     def notice(self, level: int = 0, msg: str = ''):
         '''
@@ -146,6 +151,8 @@ class Notifier:
         :return:
         '''
         now = time.time()
+
+        self.msg_list.append([time.localtime(), level, msg])
 
         can_notice = False
 

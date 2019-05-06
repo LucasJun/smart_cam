@@ -9,5 +9,5 @@ urlpatterns = [
     path('manual', views.manual, name='manual'),
     path('about', views.about, name='about'),
     # ajax
-    path('ajax_status_table', views.ajax_status_table, name='ajax_status_table'),
+    # path('ajax_status_table', views.ajax_status_table, name='ajax_status_table'),
 ]

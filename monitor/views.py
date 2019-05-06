@@ -19,22 +19,21 @@ def video_feed(request):
     scm = sc_m()
     return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
         
-def index(request):   
-    return render(request, 'index.html')
+def index(request):
+    status_list = sc_m().sc.get_recent_msg
+    content = {'status_list': status_list}
+    return render(request, 'index.html', content)
 
-def ajax_status_table(request):
-    # 读取record文件夹中的log文件
-    ts = time.strftime('%Y_%m_%d', time.localtime())
-    record_file_path = './smart_cam/smart_cam/record/' + ts + '.log'
-    status_list =[]
-    with open(record_file_path,'r') as record_file:
-        while True:
-            status = record_file.readline().split(';')
-            print(status)
-            status_list.append(status)
-            if status == None:
-                break
-    return HttpResponse(content=status_list)
+# def ajax_status_table(request):
+#     # 读取record文件夹中的log文件
+#     ts = time.strftime('%Y_%m_%d', time.localtime())
+#     record_file_path = 'smart_cam/record/' + ts + '.log'
+#     status_list =[]
+#     with open(record_file_path,'r') as record_file:
+#         lines = record_file.readlines()
+#         for i in range(-8, 0, 2):
+#             status_list.append(lines[i].split(';'))
+#     return HttpResponse(content=status_list)
 
 def adjust(request):
     return render(request, 'adjust.html')

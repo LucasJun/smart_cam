@@ -2,6 +2,24 @@ $("#ajax_status_table").ready(function(){
     $.get("ajax_status_table")
 });
 
+// window.onload=function(){
+//     $.ajax({
+//         type:"get",
+//         url:"/ajax_status_table",
+//         data:{},
+//         async: false,
+//         success:function (data) {
+//             for(var i=0;i < data.length;i++){
+//                 var x=document.getElementById('ajax_status_table').insertRow();
+//                 for(var j=0;j < data[i].length;j++){
+//                     var cell=x.insertCell();
+//                     cell.innerHTML=data[i][j];
+//                 }
+//             }
+//        }
+//     });
+// }
+
 function isHumanDetect(){
     if($('#checkbox1').is(':checked')){
         alert("人类检测开启")
