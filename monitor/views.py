@@ -15,9 +15,9 @@ def genframe(sc):
         yield (b'--frame\r\n' + line)
 
 def video_feed(request):
-#     scm = sc_m()
-#     return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
-        return
+    scm = sc_m()
+    return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
+
         
 def index(request):
     return render(request, 'index.html')

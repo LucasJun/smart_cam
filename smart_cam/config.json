@@ -34,6 +34,6 @@
 		"interest_capture_delay": 15
 	},
 	"cam": {
-		"target_addr": "127.0.0.1"
+		"target_addr": "10.42.0.118"
 	}
 }
