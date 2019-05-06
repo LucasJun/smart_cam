@@ -1,4 +1,9 @@
+# 系统路径中插入当前子目录，否则找不到包路径
 import os
+import sys
+sys.path.append('smart_cam/yolov3')
+
+
 from collections import defaultdict
 
 import torch.nn as nn

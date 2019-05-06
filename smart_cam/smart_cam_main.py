@@ -1,3 +1,8 @@
+# 系统路径中插入当前子目录，否则找不到包路径
+import os
+import sys
+sys.path.append(os.path.split(os.getcwd())[-1])
+
 import numpy as np
 import json
 import cv2
@@ -13,6 +18,7 @@ from Recorder import Recorder
 from Notifier import Notifier
 from smart_cam_receiver import smart_cam_receiver
 import const_define
+
 
 '''
 设计思路，每个检测器都有独立的检测线程，主线程负责图像获取，消息分发，与检测器现成通讯
@@ -78,7 +84,7 @@ class SmartCam:
             self.smart_cam.ctrl_framehw(self.frame_hw)
             self.smart_cam.ctrl_fps(self.fps)
 
-    def load(self, path='config.json'):
+    def load(self, path=const_define.main_config_path):
         '''
         载入配置函数，可以动态载入，载入配置时将会马上使用新的配置
         :param path:
