@@ -304,7 +304,8 @@ class SmartCam:
         :return: None or bytes
         '''
         if self.frame is not None:
-            _, data = cv2.imencode('.jpg', self.frame, (cv2.IMWRITE_JPEG_QUALITY, self.jpeg_quality))
+            img = cv2.cvtColor(self.frame, cv2.COLOR_RGB2BGR)
+            _, data = cv2.imencode('.jpg', img, (cv2.IMWRITE_JPEG_QUALITY, self.jpeg_quality))
             return bytes(data)
         return None
 
