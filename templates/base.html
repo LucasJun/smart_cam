@@ -16,16 +16,13 @@
 <script>
 
 </script>
-<body onload="load()">
+<body onload="load()" style="width: 640px; margin: 0 auto;">
     <div class="ui menu">
         <a class="item" href="/monitor">
             主页
         </a>
         <a class="item" href="/monitor/adjust">
             调整
-        </a>
-        <a class="item" href="/monitor/setting">
-            设置
         </a>
         <a class="item" href="/monitor/manual">
             手册
@@ -36,7 +33,6 @@
     </div>
     {% block index %}{% endblock %}
     {% block adjust %}{% endblock %}
-    {% block setting %}{% endblock %}
     {% block manual %}{% endblock %}
     {% block about %}{% endblock %}
 </body>

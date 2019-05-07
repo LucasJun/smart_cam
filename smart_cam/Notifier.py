@@ -152,7 +152,7 @@ class Notifier:
         '''
         now = time.time()
 
-        self.msg_list.append([time.localtime(), level, msg])
+        self.msg_list.append([time.strftime("%m-%d %H:%M:%S", time.localtime()) , level, msg])
 
         can_notice = False
 

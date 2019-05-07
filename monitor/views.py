@@ -16,15 +16,15 @@ def genframe(sc):
         yield (b'--frame\r\n' + line)
 
 def video_feed(request):
-    # scm = sc_m()
-    # return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
-    return
+    scm = sc_m()
+    return StreamingHttpResponse(genframe(scm.sc), content_type="multipart/x-mixed-replace; boundary=frame")
+
 def index(request):
     status_list = sc_m().sc.get_recent_msg()
-    notifier = {}
     with open('smart_cam/config.json', 'r') as config_file:
         config_dict = json.loads(config_file.read())
         notifier = config_dict["Notifier"]
+    status_list = sc_m().sc.get_recent_msg()
     return render(request, 'index.html', {
         'Notifier':json.dumps(notifier),
         'status_list': status_list,

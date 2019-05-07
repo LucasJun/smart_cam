@@ -1,32 +1,83 @@
 {% extends "base.html" %}
 
 {% block adjust %}
-<div class="ui left floated compact segment">
-    <div class="ui toggle checkbox">
-        <input type="checkbox">
-        <label>选项一</label>
-    </div>
-    <div class="ui toggle checkbox">
-        <input type="checkbox">
-        <label>选项一</label>
-    </div>
-    <div class="ui toggle checkbox">
-        <input type="checkbox">
-        <label>选项一</label>
-    </div>
+<div class="ui segment">
+    <form method="POST" id="config">
+        <div class="ui form">
+            <div class="inline fields">
+                <label>是否开启人类检测?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否开启动作检测?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否开启烟雾检测?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否开启火焰检测?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>检测到人类时是否录像?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>检测到动作时是否录像?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>检测到烟雾时是否录像?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>检测到火焰时是否录像?</label>
+                <div class="field">
+                    <div class="ui slider checkbox">
+                        <input type="checkbox">
+                        <label>开启</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <input type="submit" value="保存"> -->
+        </div>
+    </form>
 </div>
-<div class="ui left floated compact segment">
-        <div class="ui toggle checkbox">
-            <input type="checkbox">
-            <label>选项一</label>
-        </div>
-        <div class="ui toggle checkbox">
-            <input type="checkbox">
-            <label>选项一</label>
-        </div>
-        <div class="ui toggle checkbox">
-            <input type="checkbox">
-            <label>选项一</label>
-        </div>
-    </div>
 {% endblock %}
