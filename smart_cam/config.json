@@ -20,9 +20,9 @@
 		"nms_thresh": 0.7
 	},
 	"Notifier": {
-		"is_warning_when_human": false,
+		"is_warning_when_human": true,
 		"is_warning_when_move": false,
-		"is_warning_when_fire": false,
+		"is_warning_when_fire": true,
 		"is_warning_when_smoke": false,
 		"is_record_when_human": false,
 		"is_record_when_move": false,

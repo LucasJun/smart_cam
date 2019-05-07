@@ -253,7 +253,7 @@ class SmartCam:
                 self._is_start = True
                 self.fire_detect_thread.start()
                 self.smoke_detect_thread.start()
-                self.human_detect_thread.start()
+                # self.human_detect_thread.start()
                 self.move_detect_thread.start()
 
             # 是否可以录像由 notifier 模块的 can_record 变量控制

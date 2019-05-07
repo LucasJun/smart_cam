@@ -6,7 +6,7 @@ $("#ajax_status_table").ready(function(){
 //     $.ajax({
 //         type:"get",
 //         url:"/ajax_status_table",
-//         data:{},
+//         data:{ content },
 //         async: false,
 //         success:function (data) {
 //             for(var i=0;i < data.length;i++){
@@ -20,9 +20,11 @@ $("#ajax_status_table").ready(function(){
 //     });
 // }
 
+
 function isHumanDetect(){
     if($('#checkbox1').is(':checked')){
         alert("人类检测开启")
+        
     }
     else{
         alert("人类检测关闭")

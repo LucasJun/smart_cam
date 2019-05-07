@@ -1,9 +1,39 @@
 {% extends "base.html" %}
 
 {% block index %}
-
+<script>
+function checkStatus(){
+    var Notifier = {{ Notifier|safe }};
+    if(Notifier['is_warning_when_human']==true){
+        // checkbox状态转换
+        $('#checkbox1').prop("checked",'true');
+    }
+    else{
+        $('#checkbox1').removeProp("checked");
+    }
+    if(Notifier['is_warning_when_move']==true){
+        $('#checkbox2').prop("checked",'true');
+    }
+    else{
+        $('#checkbox2').removeProp("checked");
+    }
+    if(Notifier['is_warning_when_smoke']==true){
+        $('#checkbox3').prop("checked",true);
+    }
+    else{
+        $('#checkbox3').removeProp("checked");
+    }
+    if(Notifier['is_warning_when_fire']==true){
+        $('#checkbox4').prop("checked",true);
+    }
+    else{
+        $('#checkbox4').removeProp("checked");
+    }
+}
+window.onload = checkStatus;
+</script>
 <div class="ui segment">
-    <div class="ui grid">        
+    <div class="ui grid">
         <div class="twelve wide stretched column">
             <div class="ui two column doubling stackable grid container">
                 <div>
@@ -18,19 +48,19 @@
                         </tr>    
                     </thead>
                     <tbody>
-                        <!-- {% for i in content %}
-                            {% for j in i. %}
+                        {% for status_list in content.status_list %}   
                             <tr>
-                            <td> {{ i[1] }} </td>
-                            <td> {{ i[2] }} </td>
-                            <td> {{ i[0] }} </td>
+                                <td> {{ i.1 }} </td>
+                                <td> {{ i.2 }} </td>
+                                <td> {{ i.0 }} </td>
                             </tr>
-                        {% endfor %} -->
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="ui left floated compact segment">
+            <form id="configCheckbox" method="POST" onsubmit="return postConfig();">
                 <div class="ui toggle checkbox">
                     <input type="checkbox" id="checkbox1" onclick="isHumanDetect()">
                     <label>人类检测</label>
@@ -47,6 +77,8 @@
                     <input type="checkbox" id="checkbox4" onclick="isFireDetect()">
                     <label>火焰检测</label>
                 </div>
+            </form>
+                
     </div>
     </div>
 </div>
